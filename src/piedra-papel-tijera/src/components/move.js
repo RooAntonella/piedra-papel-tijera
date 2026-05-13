@@ -3,8 +3,8 @@ export function Move(type, onClick) {
 
     const img = document.createElement("img");
 
-    img.src = `/assets/${type}.png`;
-    img.style.width = "200px";
+    img.src = `./assets/${type}.png`;
+    img.style.width = "120px";
     img.style.display = "block";
 
     div.appendChild(img);
