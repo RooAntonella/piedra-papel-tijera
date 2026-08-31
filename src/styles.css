@@ -1,0 +1,213 @@
+/* ===== GENERAL ===== */
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+
+    background-image: url("/assets/fondo.png");
+    background-repeat: repeat;
+}
+
+.page {
+    position: relative;
+
+    width: 100%;
+    max-width: 420px;
+    height: 100vh;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+/* ===== MANOS PARA ELEGIR JUGADA ===== */
+
+.moves-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.moves-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    gap: 20px;
+}
+
+
+/* ===== COUNTDOWN ===== */
+
+.countdown {
+    margin: 0;
+
+    font-size: 200px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+/* ===== JUGADAS ENFRENTADAS ===== */
+
+/* Tu mano abajo */
+.final-my-move {
+    position: absolute;
+
+    bottom: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+/* Mano de la máquina arriba */
+.final-computer-move {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    transform: translateX(-50%) rotate(180deg);
+}
+
+.final-my-move img,
+.final-computer-move img {
+    width: 200px;
+    height: auto;
+}
+
+
+/* ===== PANTALLA RESULTADO ===== */
+
+.resultado-page {
+    gap: 18px;
+}
+
+/* Ganaste */
+.resultado-ganaste {
+    background-color: #6CBF84;
+}
+
+/* Perdiste */
+.resultado-perdiste {
+    background-color: #D96C6C;
+}
+
+/* Empate */
+.resultado-empate {
+    background-color: #F2F2F2;
+}
+
+
+/* ===== ESTRELLA ===== */
+
+.result-star {
+    width: 280px;
+    height: auto;
+}
+
+
+/* ===== SCORE ===== */
+
+.score {
+    width: 150px;
+    min-height: 150px;
+
+    padding: 18px;
+
+    background-color: white;
+
+    border: 5px solid black;
+    border-radius: 10px;
+
+    font-family: "Franklin Gothic Medium",
+        "Arial Narrow",
+        Arial,
+        sans-serif;
+
+    font-size: 20px;
+    font-style: italic;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+.score h3 {
+    margin: 0 0 15px;
+}
+
+.score p {
+    margin: 5px 0;
+}
+
+
+/* ===== BOTÓN VOLVER A JUGAR ===== */
+
+.volverajugar {
+    width: 170px;
+    min-height: 55px;
+
+    padding: 10px 15px;
+
+    font-family: "Franklin Gothic Medium",
+        "Arial Narrow",
+        Arial,
+        sans-serif;
+
+    font-size: 18px;
+
+    background-color: rgb(53, 88, 184);
+
+    border: 4px solid blue;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+
+/* ===== CELULAR ===== */
+
+@media (max-width: 480px) {
+
+    .page {
+        max-width: 100%;
+    }
+
+    .countdown {
+        font-size: 160px;
+    }
+
+    .result-star {
+        width: 250px;
+    }
+
+    .final-my-move img,
+    .final-computer-move img {
+        width: 180px;
+    }
+
+    .moves-bottom {
+        gap: 10px;
+    }
+}
