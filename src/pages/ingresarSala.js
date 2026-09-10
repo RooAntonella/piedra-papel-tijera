@@ -2,32 +2,31 @@ import { navigateTo } from "../router.js";
 import { Button } from "../components/button.js";
 import { state } from "../state.js";
 
-export function renderInicio(root) {
+export function renderIngresarSala(root) {
     const div = document.createElement("div");
     div.className = "page";
 
-    const title = document.createElement("h1");
-    title.textContent = "Piedra Papel o Tijera";
+    const title = document.createElement("h2");
+    title.textContent = "Ingresar a una sala";
 
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Tu nombre";
+    input.placeholder = "Código de sala";
 
-    const button = Button("Continuar", async () => {
-        const name = input.value.trim();
+    const button = Button("Entrar", async () => {
+        const code = input.value.trim().toUpperCase();
 
-        if (!name) {
-            alert("Ingresá tu nombre");
+        if (!code) {
+            alert("Ingresá el código de la sala");
             return;
         }
 
         try {
-            await state.createUser(name);
-
-            navigateTo("menu");
+            await state.joinRoom(code);
+            navigateTo("esperando");
         } catch (error) {
             console.error(error);
-            alert("No se pudo crear el usuario");
+            alert("No se pudo entrar a la sala");
         }
     });
 

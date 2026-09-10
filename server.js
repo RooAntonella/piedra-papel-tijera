@@ -400,6 +400,33 @@ app.post("/api/rooms/:roomId/reset", async (req, res) => {
         });
     }
 });
+app.get("/api/rooms/:roomId", async (req, res) => {
+    try {
+        const { roomId } = req.params;
+
+        const roomDoc = await db
+            .collection("rooms")
+            .doc(roomId)
+            .get();
+
+        if (!roomDoc.exists) {
+            return res.status(404).json({
+                message: "Room no encontrado",
+            });
+        }
+
+        res.json({
+            roomId: roomDoc.id,
+            ...roomDoc.data(),
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Error al obtener el room",
+        });
+    }
+});
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

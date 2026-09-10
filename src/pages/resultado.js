@@ -1,60 +1,101 @@
-import { navigateTo } from "../router.js";
 import { state } from "../state.js";
-import { getWinner } from "../game/logic.js";
+import { Button } from "../components/button.js";
 import "../styles.css";
 
 export function renderResultado(root) {
-    const div = document.createElement("div");
-    div.className = "page resultado-page";
+    const div =
+        document.createElement("div");
 
-    const currentState = state.getState();
-    const currentGame = currentState.currentGame;
-    const history = currentState.history;
+    div.className =
+        "page resultado-page";
 
-    const result = getWinner(
-        currentGame.myPlay,
-        currentGame.computerPlay
-    );
+    const currentState =
+        state.getState();
 
-    if (result === "ganaste") {
-        div.classList.add("resultado-ganaste");
-    } else if (result === "perdiste") {
-        div.classList.add("resultado-perdiste");
-    } else {
-        div.classList.add("resultado-empate");
-    }
+    const result =
+        currentState.result;
 
-    const star = document.createElement("img");
-    star.className = "result-star";
+    const score =
+        currentState.score;
+
+    const title =
+        document.createElement("h1");
 
     if (result === "ganaste") {
-        star.src = "./assets/ganaste.png";
-    } else if (result === "perdiste") {
-        star.src = "./assets/perdiste.png";
+        title.textContent =
+            "¡Ganaste!";
+
+        div.classList.add(
+            "resultado-ganaste"
+        );
+    } else if (
+        result === "perdiste"
+    ) {
+        title.textContent =
+            "Perdiste";
+
+        div.classList.add(
+            "resultado-perdiste"
+        );
     } else {
-        star.src = "./assets/empate.png";
+        title.textContent =
+            "¡Empate!";
+
+        div.classList.add(
+            "resultado-empate"
+        );
     }
 
-    const score = document.createElement("div");
-    score.className = "score";
+    const star =
+        document.createElement("img");
 
-    score.innerHTML = `
+    star.className =
+        "result-star";
+
+    if (result === "ganaste") {
+        star.src =
+            "./assets/ganaste.png";
+    } else if (
+        result === "perdiste"
+    ) {
+        star.src =
+            "./assets/perdiste.png";
+    } else {
+        star.src =
+            "./assets/empate.png";
+    }
+
+    const scoreBox =
+        document.createElement("div");
+
+    scoreBox.className = "score";
+
+    scoreBox.innerHTML = `
         <h3>Score</h3>
-        <p>Vos: ${history.myScore}</p>
-        <p>Máquina: ${history.computerScore}</p>
+        <p>${currentState.userName}: ${score.me}</p>
+        <p>${currentState.opponentName}: ${score.opponent}</p>
     `;
 
-    const btn = document.createElement("button");
-    btn.textContent = "Volver a jugar";
-    btn.className = "volverajugar";
+    const playAgainButton =
+        Button(
+            "Volver a jugar",
+            async () => {
+                try {
+                    await state.resetRound();
+                } catch (error) {
+                    console.error(error);
 
-    btn.addEventListener("click", () => {
-        navigateTo("inicio");
-    });
+                    alert(
+                        "No se pudo reiniciar la ronda"
+                    );
+                }
+            }
+        );
 
+    div.appendChild(title);
     div.appendChild(star);
-    div.appendChild(score);
-    div.appendChild(btn);
+    div.appendChild(scoreBox);
+    div.appendChild(playAgainButton);
 
     root.appendChild(div);
 }
