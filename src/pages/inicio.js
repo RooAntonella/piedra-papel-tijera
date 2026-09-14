@@ -1,6 +1,7 @@
 import { navigateTo } from "../router.js";
 import { Button } from "../components/button.js";
 import { state } from "../state.js";
+import { HandsFooter } from "../components/handsFooter.js";
 
 export function renderInicio(root) {
     const div = document.createElement("div");
@@ -34,6 +35,6 @@ export function renderInicio(root) {
     div.appendChild(title);
     div.appendChild(input);
     div.appendChild(button);
-
+    div.appendChild(HandsFooter());
     root.appendChild(div);
 }

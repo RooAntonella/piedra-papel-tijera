@@ -38,13 +38,8 @@ const state = {
         result: null,
     },
 
-    // Suscriptores del state
     listeners: [],
-
-    // Nos permite cerrar el listener anterior de Firebase
     roomUnsubscribe: null,
-
-    // Evita resolver dos veces una misma ronda
     resolvingRound: false,
 
     getState() {
@@ -288,6 +283,20 @@ const state = {
 
                 let currentPage =
                     this.data.currentPage;
+
+                // Si los dos están listos,
+                // pasamos automáticamente al countdown
+                const bothReady =
+                    me?.start &&
+                    opponent?.start;
+
+                if (
+                    bothReady &&
+                    this.data.currentPage ===
+                    "esperando"
+                ) {
+                    currentPage = "countdown";
+                }
 
                 // Si el backend ya resolvió la ronda
                 if (

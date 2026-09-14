@@ -1,5 +1,6 @@
 import { navigateTo } from "../router.js";
 import { Button } from "../components/button.js";
+import { HandsFooter } from "../components/handsFooter.js";
 import { state } from "../state.js";
 
 export function renderMenu(root) {
@@ -19,13 +20,17 @@ export function renderMenu(root) {
         }
     });
 
-    const ingresarSala = Button("Ingresar a una sala", () => {
-        navigateTo("ingresarSala");
-    });
+    const ingresarSala = Button(
+        "Ingresar a una sala",
+        () => {
+            navigateTo("ingresarSala");
+        }
+    );
 
     div.appendChild(title);
     div.appendChild(nuevoJuego);
     div.appendChild(ingresarSala);
+    div.appendChild(HandsFooter());
 
     root.appendChild(div);
 }

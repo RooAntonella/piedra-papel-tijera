@@ -1,5 +1,7 @@
 import { state } from "../state.js";
 import { Button } from "../components/button.js";
+import { HandsFooter } from "../components/handsFooter.js";
+import { GameHeader } from "../components/gameHeader.js";
 import { navigateTo } from "../router.js";
 
 export function renderEsperando(root) {
@@ -9,69 +11,79 @@ export function renderEsperando(root) {
     const currentState = state.getState();
     const game = currentState.currentGame;
 
-    const title = document.createElement("h2");
-
-    const codeText = document.createElement("p");
-    codeText.textContent = "Código de sala:";
-
-    const code = document.createElement("h1");
-    code.textContent = currentState.roomCode;
-
-    div.appendChild(codeText);
-    div.appendChild(code);
+    div.appendChild(GameHeader());
 
     // Todavía no entró el segundo jugador
     if (!currentState.opponentId) {
+        const title = document.createElement("h2");
         title.textContent = "Esperando oponente...";
 
-        div.prepend(title);
+        const codeText = document.createElement("p");
+        codeText.textContent = "Compartí el código:";
+
+        const code = document.createElement("div");
+        code.className = "room-code";
+        code.textContent = currentState.roomCode;
+
+        div.appendChild(title);
+        div.appendChild(codeText);
+        div.appendChild(code);
+        div.appendChild(HandsFooter());
+
         root.appendChild(div);
         return;
     }
 
     // Ya están los dos jugadores
-    title.textContent = `${currentState.userName} vs ${currentState.opponentName}`;
+    const title = document.createElement("h2");
+    title.textContent =
+        `${currentState.userName} vs ${currentState.opponentName}`;
 
-    const myStatus = document.createElement("p");
-    myStatus.textContent = game.myReady
-        ? "Vos: listo ✅"
-        : "Vos: esperando";
+    div.appendChild(title);
 
-    const opponentStatus = document.createElement("p");
-    opponentStatus.textContent = game.opponentReady
-        ? `${currentState.opponentName}: listo ✅`
-        : `${currentState.opponentName}: esperando`;
-
-    div.appendChild(myStatus);
-    div.appendChild(opponentStatus);
-
-    // Si todavía no marqué "listo"
+    // Todavía no marqué listo
     if (!game.myReady) {
-        const readyButton = Button("Estoy listo", async () => {
-            try {
-                await state.setReady();
-            } catch (error) {
-                console.error(error);
-                alert("No se pudo marcar como listo");
+        const text = document.createElement("p");
+        text.textContent =
+            "¡Tu oponente ya está en la sala!";
+
+        const instructionsButton = Button(
+            "Continuar",
+            () => {
+                navigateTo("instrucciones");
             }
-        });
+        );
 
-        div.appendChild(readyButton);
+        div.appendChild(text);
+        div.appendChild(instructionsButton);
+        div.appendChild(HandsFooter());
+
+        root.appendChild(div);
+        return;
     }
 
-    // Cuando los dos están listos
-    if (game.myReady && game.opponentReady) {
-        const readyText = document.createElement("h2");
-        readyText.textContent = "¡Los dos están listos!";
+    // Yo listo, esperando al rival
+    if (!game.opponentReady) {
+        const myStatus = document.createElement("p");
+        myStatus.textContent = "Vos: listo ✅";
 
-        const playButton = Button("¡Jugar!", () => {
-            navigateTo("juego");
-        });
+        const opponentStatus = document.createElement("p");
+        opponentStatus.textContent =
+            `${currentState.opponentName}: esperando`;
 
-        div.appendChild(readyText);
-        div.appendChild(playButton);
+        div.appendChild(myStatus);
+        div.appendChild(opponentStatus);
+        div.appendChild(HandsFooter());
+
+        root.appendChild(div);
+        return;
     }
 
-    div.prepend(title);
+    const readyText = document.createElement("h2");
+    readyText.textContent = "¡Los dos están listos!";
+
+    div.appendChild(readyText);
+    div.appendChild(HandsFooter());
+
     root.appendChild(div);
 }

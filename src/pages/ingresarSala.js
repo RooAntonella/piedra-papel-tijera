@@ -1,19 +1,20 @@
 import { navigateTo } from "../router.js";
 import { Button } from "../components/button.js";
+import { HandsFooter } from "../components/handsFooter.js";
 import { state } from "../state.js";
 
 export function renderIngresarSala(root) {
     const div = document.createElement("div");
     div.className = "page";
 
-    const title = document.createElement("h2");
-    title.textContent = "Ingresar a una sala";
+    const title = document.createElement("h1");
+    title.textContent = "Piedra Papel o Tijera";
 
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Código de sala";
+    input.placeholder = "Código";
 
-    const button = Button("Entrar", async () => {
+    const button = Button("Ingresar a la sala", async () => {
         const code = input.value.trim().toUpperCase();
 
         if (!code) {
@@ -33,6 +34,7 @@ export function renderIngresarSala(root) {
     div.appendChild(title);
     div.appendChild(input);
     div.appendChild(button);
+    div.appendChild(HandsFooter());
 
     root.appendChild(div);
 }

@@ -1,10 +1,11 @@
 import { state } from "../state.js";
 import { Move } from "../components/move.js";
+import { GameHeader } from "../components/gameHeader.js";
 
 export function renderJuego(root) {
     const div = document.createElement("div");
     div.className = "page";
-
+    div.appendChild(GameHeader());
     const currentState = state.getState();
     const game = currentState.currentGame;
 

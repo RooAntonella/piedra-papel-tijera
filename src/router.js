@@ -5,6 +5,7 @@ import { renderResultado } from "./pages/resultado.js";
 import { renderMenu } from "./pages/menu.js";
 import { renderIngresarSala } from "./pages/ingresarSala.js";
 import { renderEsperando } from "./pages/esperando.js";
+import { renderCountdown } from "./pages/countdown.js";
 
 import { state } from "./state.js";
 
@@ -16,6 +17,7 @@ export function navigateTo(page) {
 
 export function render() {
     const root = document.querySelector("#app");
+
     root.innerHTML = "";
 
     const currentPage = state.getState().currentPage;
@@ -34,6 +36,9 @@ export function render() {
 
     } else if (currentPage === "instrucciones") {
         renderInstrucciones(root);
+
+    } else if (currentPage === "countdown") {
+        renderCountdown(root);
 
     } else if (currentPage === "juego") {
         renderJuego(root);
