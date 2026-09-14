@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    base: "/piedra-papel-tijera/",
+    base: "/",
 
     server: {
         proxy: {
@@ -11,4 +11,4 @@ export default defineConfig({
             },
         },
     },
-}); 
+});
